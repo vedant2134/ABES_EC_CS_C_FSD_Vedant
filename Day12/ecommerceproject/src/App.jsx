@@ -1,35 +1,68 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import { useEffect, useState } from "react";
+const Header = () => {
+  return <div className="header">Header</div>;
+};
+const Search = ({ filterHandler }) => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="search">
+      <input
+        type="text"
+        name="search"
+        id="search"
+        onChange={(e) => filterHandler(e.target.value)}
+      />
+      <button>search</button>
+    </div>
+  );
+};
+const Product = ({ product }) => {
+  return (
+    <div className="product">
+      <img src={product.img} alt="img-here" />
+      <h2>{product.title}</h2>
+      <h3>{product.price}</h3>
+    </div>
+  );
+};
+const Body = () => {
+  const [products, setProducts] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  useEffect(() => {
+    fetch("./products.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setFilteredData(data);
+      })
+      .catch((err) => console.log("unable to load data", err));
+  }, []);
+  const filterHandler = (query) => {
+    const data = products.filter((product) =>
+      product.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(data);
+  };
+  return (
+    <div className="body">
+      <Search filterHandler={filterHandler} />
+      <div className="products">
+        {filteredData.map((product) => (
+          <Product product={product} />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
+};
+const Footer = () => {
+  return <div className="footer">Footer</div>;
+};
+function App() {
+  return (
+    <div className="app">
+      <Header />
+      <Body />
+      <Footer />
+    </div>
+  );
 }
-
-export default App
+export default App;
