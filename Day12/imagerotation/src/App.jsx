@@ -1,33 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [degree, setDegree] = useState(0);
+  const rotateHandler = () => setDegree(degree + 90);
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-  
+    <div className="image-rotation">
+      <h2>Image Rotation</h2>
+      <img
+        style={{
+          transform: `rotate(${degree}deg)`,
+          height: "150px",
+          width: "150px",
+        }}
+        src="https://imgs.search.brave.com/PXviRQ988K703OCAMhtHIy3ET6ukkIgQlzTpDaS-5VI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvZHY3/NDEwNjMvcGhvdG8v/Ym91bmNlci13ZWFy/aW5nLXN1bmdsYXNz/ZXMtd2l0aC1hcm1z/LWNyb3NzZWQuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPVlF/ajQ5ZXZWLW5KX0Fm/UlJnRzhuUHlsUUE5/dGZMRURiY0pnVG5R/WjY5bG89"
+        alt="img-here"
+      />
+      <br />
+      <button onClick={rotateHandler}>Rotate</button>
+    </div>
+  );
 }
-export default App
+
+export default App;
